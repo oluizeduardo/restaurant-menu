@@ -1,0 +1,1 @@
+// global.ts - criado automaticamente

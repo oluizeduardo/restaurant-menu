@@ -1,0 +1,1 @@
+// authService.ts - criado automaticamente

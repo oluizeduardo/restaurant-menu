@@ -1,0 +1,103 @@
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { AppStackParamList } from "../types/navigation";
+import { styles } from "../styles/storeListScreen_styles";
+
+interface Loja {
+  id: string;
+  nome: string;
+  endereco: string;
+  cnpj: string;
+  latitude: string;
+  longitude: string;
+}
+
+export const StoreListScreen = () => {
+  const [lojas, setLojas] = useState<Loja[]>([]);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AppStackParamList>>();
+
+  useEffect(() => {
+    carregarLojas();
+  }, []);
+
+  const carregarLojas = async () => {
+    const data = await AsyncStorage.getItem("@CatalogoDigitalApp:lojas");
+    if (data) {
+      setLojas(JSON.parse(data));
+    }
+  };
+
+  const excluirLoja = (id: string) => {
+    Alert.alert("Excluir Loja", "Tem certeza que deseja excluir esta loja?", [
+      { text: "Cancelar", style: "cancel" },
+      {
+        text: "Excluir",
+        style: "destructive",
+        onPress: async () => {
+          const atualizadas = lojas.filter((l) => l.id !== id);
+          setLojas(atualizadas);
+          await AsyncStorage.setItem(
+            "@CatalogoDigitalApp:lojas",
+            JSON.stringify(atualizadas)
+          );
+        },
+      },
+    ]);
+  };
+
+  const editarLoja = (loja: Loja) => {
+    console.log("teste");
+    navigation.navigate("StoreRegister", { loja });
+  };
+
+  const renderItem = ({ item }: { item: Loja }) => (
+    <View style={styles.card}>
+      <View style={styles.details}>
+        <Text style={styles.nome}>{item.nome}</Text>
+        <Text style={styles.endereco}>{item.endereco}</Text>
+        <Text style={styles.cnpj}>CNPJ: {item.cnpj}</Text>
+        <Text style={styles.coord}>
+          Lat: {item.latitude} | Lon: {item.longitude}
+        </Text>
+        <View style={styles.actions}>
+          <TouchableOpacity
+            onPress={() => editarLoja(item)}
+            style={styles.buttonEdit}
+          >
+            <Text style={styles.buttonText}>Editar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => excluirLoja(item.id)}
+            style={styles.buttonDelete}
+          >
+            <Text style={styles.buttonText}>Excluir</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={lojas}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+        ListEmptyComponent={
+          <Text style={styles.empty}>Nenhuma loja cadastrada.</Text>
+        }
+      />
+    </View>
+  );
+};
