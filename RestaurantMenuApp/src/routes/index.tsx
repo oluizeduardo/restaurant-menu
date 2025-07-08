@@ -6,12 +6,10 @@ import { useAuth } from "../context/AuthContext";
 import { LoginScreen } from "../screens/LoginScreen";
 import { RegisterScreen } from "../screens/RegisterScreen";
 import { HomeScreen } from "../screens/HomeScreen";
-
 import { RestaurantRegisterScreen } from "../screens/RestaurantRegisterScreen";
 import { ProductRegisterScreen } from "../screens/ProductRegisterScreen";
 import { ProductListScreen } from "../screens/ProductListScreen";
-import { StoreListScreen } from "../screens/StoreListScreen";
-
+import { RestaurantListScreen } from "../screens/RestaurantListScreen";
 import { ActivityIndicator, View } from "react-native";
 import { AuthStackParamList, AppStackParamList } from "../types/navigation";
 
@@ -33,10 +31,10 @@ export function Routes() {
       {isAuthenticated ? (
         <AppStack.Navigator id={undefined}>
           <AppStack.Screen name="Home" component={HomeScreen} />
-          <AppStack.Screen name="StoreRegister" component={RestaurantRegisterScreen} />
+          <AppStack.Screen name="RestaurantRegister" component={RestaurantRegisterScreen} />
           <AppStack.Screen name="ProductRegister" component={ProductRegisterScreen} />
           <AppStack.Screen name="ProductList" component={ProductListScreen} />
-          <AppStack.Screen name="StoreList" component={StoreListScreen} />
+          <AppStack.Screen name="RestaurantList" component={RestaurantListScreen} />
         </AppStack.Navigator>
       ) : (
         <AuthStack.Navigator id={undefined}>

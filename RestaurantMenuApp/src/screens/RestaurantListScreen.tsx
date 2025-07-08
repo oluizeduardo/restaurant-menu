@@ -3,7 +3,6 @@ import {
   View,
   Text,
   FlatList,
-  StyleSheet,
   Alert,
   TouchableOpacity,
 } from "react-native";
@@ -12,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AppStackParamList } from "../types/navigation";
 import { styles } from "../styles/storeListScreen_styles";
+import { Restaurante } from "types/restaurante";
 
 interface Loja {
   id: string;
@@ -22,7 +22,7 @@ interface Loja {
   longitude: string;
 }
 
-export const StoreListScreen = () => {
+export const RestaurantListScreen = () => {
   const [lojas, setLojas] = useState<Loja[]>([]);
   const navigation =
     useNavigation<NativeStackNavigationProp<AppStackParamList>>();
@@ -56,9 +56,8 @@ export const StoreListScreen = () => {
     ]);
   };
 
-  const editarLoja = (loja: Loja) => {
-    console.log("teste");
-    navigation.navigate("StoreRegister", { loja });
+  const editarLoja = (restaurante: Restaurante) => {
+    navigation.navigate("RestaurantRegister", { restaurante });
   };
 
   const renderItem = ({ item }: { item: Loja }) => (

@@ -1,5 +1,4 @@
-// navigation.ts - criado automaticamente
-import { Loja } from "./restaurante";
+import { Restaurante } from "./restaurante";
 import { Produto } from "./produto";
 
 export type AuthStackParamList = {
@@ -9,8 +8,8 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
   Home: undefined;
-  StoreRegister: { loja?: Loja };
+  RestaurantRegister: { restaurante?: Restaurante };
   ProductRegister: { produto?: Produto };
   ProductList: undefined;
-  StoreList: undefined;
+  RestaurantList: undefined;
 };

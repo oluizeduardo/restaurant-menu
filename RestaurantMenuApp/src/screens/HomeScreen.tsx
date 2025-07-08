@@ -46,8 +46,8 @@ export const HomeScreen = () => {
         <Text style={home_styles.welcome}>Bem-vindo, {user?.nome}!</Text>
 
         <View style={home_styles.menuContainer}>
-          <MenuButton title="Cadastrar Restaurante" screen="StoreRegister" />
-          <MenuButton title="Lista de Restaurantes" screen="StoreList" />
+          <MenuButton title="Cadastrar Restaurante" screen="RestaurantRegister" />
+          <MenuButton title="Lista de Restaurantes" screen="RestaurantList" />
           <MenuButton title="Cadastrar Produto" screen="ProductRegister" />
           <MenuButton title="Lista de Produtos" screen="ProductList" />
           <MenuButton title="Sair" onPress={logout} color="#DC2626" />

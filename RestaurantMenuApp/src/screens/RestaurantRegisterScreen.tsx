@@ -19,13 +19,13 @@ import { AppStackParamList } from "../types/navigation";
 import { Restaurante } from "../types/restaurante";
 import { styles } from "../styles/restauranteRegisterScreen_styles";
 
-type Props = NativeStackScreenProps<AppStackParamList, "StoreRegister">;
+type Props = NativeStackScreenProps<AppStackParamList, "RestaurantRegister">;
 
 export const RestaurantRegisterScreen = ({ route, navigation }: Props) => {
 
-  const STORAGE_NAME = "@CatalogoDigitalApp:restaurantes";
+  const STORAGE_NAME = "@CatalogoDigitalApp:lojas";
 
-  const restauranteEdit = route.params?.loja;
+  const restauranteEdit = route.params?.restaurante;
 
   const [nome, setNome] = useState("");
   const [endereco, setEndereco] = useState("");

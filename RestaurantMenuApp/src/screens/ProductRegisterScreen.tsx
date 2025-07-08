@@ -1,4 +1,3 @@
-// ProductRegisterScreen.tsx - criado automaticamente
 import React, { useEffect, useState } from "react";
 import {
   View,
