@@ -16,13 +16,12 @@ import {
   listarProdutos,
   excluirProdutoPorId,
 } from "../services/productService";
-import { produto_styles } from "../styles/produto_styles";
+import { produto_styles } from "../styles/produtoStyles";
 
 export const ProductListScreen = () => {
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [filtro, setFiltro] = useState("");
-  const navigation =
-    useNavigation<NativeStackNavigationProp<AppStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
   const isFocused = useIsFocused();
 
   useEffect(() => {

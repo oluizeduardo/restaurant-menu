@@ -1,4 +1,3 @@
-// masks.ts - criado automaticamente
 /**
  * Aplica a máscara de CNPJ no formato XX.XXX.XXX/XXXX-XX
  */

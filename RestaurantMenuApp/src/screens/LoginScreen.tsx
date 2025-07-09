@@ -12,6 +12,7 @@ import { useAuth } from "../context/AuthContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../types/navigation";
 import { styles } from "../styles/loginScreen_styles";
+import { icons } from "utils/icons";
 
 type Props = NativeStackScreenProps<AuthStackParamList, "Login">;
 
@@ -38,7 +39,7 @@ export const LoginScreen = ({ navigation }: Props) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../assets/logo-sacola.png")}
+        source={icons.cardapio}
         style={styles.logo}
       />
       <Text style={styles.title}>Entrar no Cardapp</Text>

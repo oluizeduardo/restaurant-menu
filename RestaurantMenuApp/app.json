@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RestaurantMenuApp",
-    "slug": "RestaurantMenuApp",
+    "name": "CardApp",
+    "slug": "CardApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

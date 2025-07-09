@@ -6,7 +6,8 @@ import { Button } from "../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../types/navigation";
-import register_styles from "../styles/register_styles";
+import register_styles from "../styles/registerStyles";
+import { STORAGE_KEYS } from "../config/storage";
 
 interface Usuario {
   id: string;
@@ -17,8 +18,6 @@ interface Usuario {
 }
 
 export const RegisterScreen = () => {
-
-  const STORAGE_NAME = "@CatalogoDigitalApp:usuarios";
 
   const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
 
@@ -41,7 +40,7 @@ export const RegisterScreen = () => {
     }
 
     try {
-      const usuariosJSON = await AsyncStorage.getItem(STORAGE_NAME);
+      const usuariosJSON = await AsyncStorage.getItem(STORAGE_KEYS.USUARIOS);
       const usuarios: Usuario[] = usuariosJSON ? JSON.parse(usuariosJSON) : [];
 
       const emailExistente = usuarios.some((u) => u.email.toLowerCase() === email.toLowerCase());
@@ -60,7 +59,7 @@ export const RegisterScreen = () => {
       };
 
       usuarios.push(novoUsuario);
-      await AsyncStorage.setItem(STORAGE_NAME, JSON.stringify(usuarios));
+      await AsyncStorage.setItem(STORAGE_KEYS.USUARIOS, JSON.stringify(usuarios));
 
       Alert.alert("Sucesso", "Cadastro realizado com sucesso!", [
         { text: "OK", onPress: () => navigation.navigate("Login") },

@@ -1,4 +1,3 @@
-// validators.ts - criado automaticamente
 /**
  * Valida se um CNPJ é válido conforme os dígitos verificadores
  */

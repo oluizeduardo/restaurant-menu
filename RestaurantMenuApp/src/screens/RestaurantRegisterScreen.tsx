@@ -17,13 +17,12 @@ import { formatarCNPJ } from "../utils/masks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AppStackParamList } from "../types/navigation";
 import { Restaurante } from "../types/restaurante";
-import { styles } from "../styles/restauranteRegisterScreen_styles";
+import { styles } from "../styles/restauranteRegisterScreenStyles";
+import { STORAGE_KEYS } from "../config/storage";
 
 type Props = NativeStackScreenProps<AppStackParamList, "RestaurantRegister">;
 
 export const RestaurantRegisterScreen = ({ route, navigation }: Props) => {
-
-  const STORAGE_NAME = "@CatalogoDigitalApp:lojas";
 
   const restauranteEdit = route.params?.restaurante;
 
@@ -70,7 +69,7 @@ export const RestaurantRegisterScreen = ({ route, navigation }: Props) => {
     }
 
     try {
-      const dadosExistentes = await AsyncStorage.getItem(STORAGE_NAME);
+      const dadosExistentes = await AsyncStorage.getItem(STORAGE_KEYS.RESTAURANTES);
       const restaurantes = dadosExistentes ? JSON.parse(dadosExistentes) : [];
 
       if (restauranteEdit) {
@@ -79,8 +78,8 @@ export const RestaurantRegisterScreen = ({ route, navigation }: Props) => {
             ? { ...r, nome, endereco, cnpj, latitude, longitude }
             : r
         );
-        await AsyncStorage.setItem(STORAGE_NAME, JSON.stringify(restaurantesAtualizados));
-        Alert.alert("Sucesso", "Restaurante atualizada com sucesso!");
+        await AsyncStorage.setItem(STORAGE_KEYS.RESTAURANTES, JSON.stringify(restaurantesAtualizados));
+        Alert.alert("Sucesso", "Restaurante atualizado com sucesso!");
       } else {
         const novoRestaurante: Restaurante = {
           id: Date.now().toString(),
@@ -91,14 +90,14 @@ export const RestaurantRegisterScreen = ({ route, navigation }: Props) => {
           longitude,
         };
         restaurantes.push(novoRestaurante);
-        await AsyncStorage.setItem(STORAGE_NAME, JSON.stringify(restaurantes));
-        Alert.alert("Sucesso", "Restaurante cadastrada com sucesso!");
+        await AsyncStorage.setItem(STORAGE_KEYS.RESTAURANTES, JSON.stringify(restaurantes));
+        Alert.alert("Sucesso", "Restaurante cadastrado com sucesso!");
         limparCampos();
       }
 
       navigation.goBack();
     } catch (error) {
-      Alert.alert("Erro", "Falha ao salvar a restaurante.");
+      Alert.alert("Erro", "Falha ao salvar restaurante.");
       console.error(error);
     }
   };

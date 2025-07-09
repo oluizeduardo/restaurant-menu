@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-  View,
   Text,
-  StyleSheet,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
@@ -16,7 +14,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AppStackParamList } from "../types/navigation";
 import { Produto } from "../types/produto";
 import { salvarProduto } from "../services/productService";
-import { produto_styles } from "../styles/produto_styles";
+import { produto_styles } from "../styles/produtoStyles";
 
 type Props = NativeStackScreenProps<AppStackParamList, "ProductRegister">;
 

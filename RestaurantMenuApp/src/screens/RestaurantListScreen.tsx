@@ -10,8 +10,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AppStackParamList } from "../types/navigation";
-import { styles } from "../styles/storeListScreen_styles";
+import { styles } from "../styles/storeListScreenStyles";
 import { Restaurante } from "types/restaurante";
+import { STORAGE_KEYS } from "../config/storage";
 
 interface Loja {
   id: string;
@@ -24,22 +25,21 @@ interface Loja {
 
 export const RestaurantListScreen = () => {
   const [lojas, setLojas] = useState<Loja[]>([]);
-  const navigation =
-    useNavigation<NativeStackNavigationProp<AppStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
 
   useEffect(() => {
     carregarLojas();
   }, []);
 
   const carregarLojas = async () => {
-    const data = await AsyncStorage.getItem("@CatalogoDigitalApp:lojas");
+    const data = await AsyncStorage.getItem(STORAGE_KEYS.RESTAURANTES);
     if (data) {
       setLojas(JSON.parse(data));
     }
   };
 
   const excluirLoja = (id: string) => {
-    Alert.alert("Excluir Loja", "Tem certeza que deseja excluir esta loja?", [
+    Alert.alert("Excluir Restaurante", "Tem certeza que deseja excluir este restaurante?", [
       { text: "Cancelar", style: "cancel" },
       {
         text: "Excluir",
@@ -48,7 +48,7 @@ export const RestaurantListScreen = () => {
           const atualizadas = lojas.filter((l) => l.id !== id);
           setLojas(atualizadas);
           await AsyncStorage.setItem(
-            "@CatalogoDigitalApp:lojas",
+            STORAGE_KEYS.RESTAURANTES,
             JSON.stringify(atualizadas)
           );
         },
@@ -94,7 +94,7 @@ export const RestaurantListScreen = () => {
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         ListEmptyComponent={
-          <Text style={styles.empty}>Nenhuma loja cadastrada.</Text>
+          <Text style={styles.empty}>Nenhum restaurante cadastrado.</Text>
         }
       />
     </View>

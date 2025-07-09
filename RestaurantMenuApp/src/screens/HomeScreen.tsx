@@ -2,37 +2,17 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
   ScrollView,
   RefreshControl,
 } from "react-native";
 import { useAuth } from "../context/AuthContext";
-import { useNavigation } from "@react-navigation/native";
-import home_styles from "../styles/home_styles";
+import home_styles from "../styles/homeStyles";
+import { MenuButton } from "components/MenuButton";
+import { icons } from "utils/icons";
 
 export const HomeScreen = () => {
   const { user, logout } = useAuth();
-  const navigation = useNavigation();
   const [carregando, setCarregando] = useState(false);
-
-  const MenuButton = ({
-    title,
-    screen,
-    onPress,
-    color = "#2563EB",
-  }: {
-    title: string;
-    screen?: string;
-    onPress?: () => void;
-    color?: string;
-  }) => (
-    <TouchableOpacity
-      style={[home_styles.menuItem, { backgroundColor: color }]}
-      onPress={onPress ? onPress : () => navigation.navigate(screen as never)}
-    >
-      <Text style={home_styles.menuText}>{title}</Text>
-    </TouchableOpacity>
-  );
 
   return (
     <View style={home_styles.page}>
@@ -46,11 +26,36 @@ export const HomeScreen = () => {
         <Text style={home_styles.welcome}>Bem-vindo, {user?.nome}!</Text>
 
         <View style={home_styles.menuContainer}>
-          <MenuButton title="Cadastrar Restaurante" screen="RestaurantRegister" />
-          <MenuButton title="Lista de Restaurantes" screen="RestaurantList" />
-          <MenuButton title="Cadastrar Produto" screen="ProductRegister" />
-          <MenuButton title="Lista de Produtos" screen="ProductList" />
-          <MenuButton title="Sair" onPress={logout} color="#DC2626" />
+          <MenuButton
+            title="Cadastrar Restaurante"
+            screen="RestaurantRegister"
+            icon={icons.restaurant}
+          />
+
+          <MenuButton
+            title="Lista de Restaurantes"
+            screen="RestaurantList"
+            icon={icons.restaurant}
+          />
+
+          <MenuButton
+            title="Cadastrar Produto"
+            screen="ProductRegister"
+            icon={icons.product}
+          />
+
+          <MenuButton
+            title="Lista de Produtos"
+            screen="ProductList"
+            icon={icons.product}
+          />
+
+          <MenuButton
+            title="Sair"
+            onPress={logout}
+            color="#DC2626"
+            icon={icons.logout}
+          />
         </View>
       </ScrollView>
     </View>

@@ -3,7 +3,7 @@ import { AuthProvider } from "./src/context/AuthContext";
 import { Routes } from "./src/routes";
 import { View, ActivityIndicator } from "react-native";
 import { useAuth } from "./src/context/AuthContext";
-import { loadingContainer } from "styles/loading_container";
+import { loadingContainer } from "styles/loadingContainer";
 
 function AppContent() {
   const { loading } = useAuth();
