@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { User } from "../types/user";
+import { STORAGE_KEYS } from "../config/storage";
 
 interface AuthContextData {
   user: User | null;
@@ -25,16 +26,13 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  
-  const USERS_STORAGE_NAME = "@CatalogoDigitalApp:usuarios";
-  const LOGGED_USER_STORAGE_NAME = "@CatalogoDigitalApp:user";
 
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadUserFromStorage = async () => {
-      const savedUser = await AsyncStorage.getItem(LOGGED_USER_STORAGE_NAME);
+      const savedUser = await AsyncStorage.getItem(STORAGE_KEYS.USUARIO_LOGADO);
       if (savedUser) {
         setUser(JSON.parse(savedUser));
       }
@@ -45,14 +43,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const login = async (email: string, senha: string): Promise<boolean> => {
     try {
-      const usersJSON = await AsyncStorage.getItem(USERS_STORAGE_NAME);
+      const usersJSON = await AsyncStorage.getItem(STORAGE_KEYS.USUARIOS);
       const users: User[] = usersJSON ? JSON.parse(usersJSON) : [];
 
       const found = users.find((u) => u.email.toLowerCase() === email.toLowerCase() && u.senha === senha);
 
       if (found) {
         setUser(found);
-        await AsyncStorage.setItem(LOGGED_USER_STORAGE_NAME, JSON.stringify(found));
+        await AsyncStorage.setItem(STORAGE_KEYS.USUARIO_LOGADO, JSON.stringify(found));
         return true;
       }
 
@@ -67,7 +65,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     userData: Omit<User, "senha"> & { senha: string }
   ): Promise<boolean> => {
     try {
-      const usersJSON = await AsyncStorage.getItem(USERS_STORAGE_NAME);
+      const usersJSON = await AsyncStorage.getItem(STORAGE_KEYS.USUARIOS);
       const users: User[] = usersJSON ? JSON.parse(usersJSON) : [];
 
       const exists = users.some((u) => u.email.toLowerCase() === userData.email.toLowerCase());
@@ -76,9 +74,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const newUser: User = { ...userData };
       users.push(newUser);
 
-      await AsyncStorage.setItem(USERS_STORAGE_NAME, JSON.stringify(users));
+      await AsyncStorage.setItem(STORAGE_KEYS.USUARIOS, JSON.stringify(users));
       setUser(newUser);
-      await AsyncStorage.setItem(LOGGED_USER_STORAGE_NAME, JSON.stringify(newUser));
+      await AsyncStorage.setItem(STORAGE_KEYS.USUARIO_LOGADO, JSON.stringify(newUser));
 
       return true;
     } catch (error) {
@@ -89,7 +87,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logout = () => {
     setUser(null);
-    AsyncStorage.removeItem(LOGGED_USER_STORAGE_NAME);
+    AsyncStorage.removeItem(STORAGE_KEYS.USUARIO_LOGADO);
   };
 
   return (

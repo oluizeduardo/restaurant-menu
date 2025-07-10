@@ -16,6 +16,8 @@ export const Button = ({
 
   return (
     <TouchableOpacity
+      accessibilityRole="button"
+      accessibilityLabel={title}
       style={[button_styles.button, { backgroundColor }]}
       onPress={onPress}
     >
