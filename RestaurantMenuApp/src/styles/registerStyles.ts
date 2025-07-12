@@ -1,4 +1,3 @@
-// register_styles.ts - criado automaticamente
 import { StyleSheet, Dimensions } from "react-native";
 
 const register_styles = StyleSheet.create({
