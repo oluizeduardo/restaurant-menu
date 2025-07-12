@@ -3,6 +3,7 @@ export interface Restaurante {
   nome: string;
   endereco: string;
   cnpj: string;
+  cep: string;
   latitude: string;
   longitude: string;
 }

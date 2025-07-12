@@ -11,7 +11,7 @@ import { Button } from "../components/Button";
 import { useAuth } from "../context/AuthContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../types/navigation";
-import { styles } from "../styles/loginScreen_styles";
+import { styles } from "../styles/loginScreenStyles";
 import { icons } from "utils/icons";
 
 type Props = NativeStackScreenProps<AuthStackParamList, "Login">;

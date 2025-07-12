@@ -17,11 +17,16 @@ import {
   excluirProdutoPorId,
 } from "../services/productService";
 import { produto_styles } from "../styles/produtoStyles";
+import { useAuth } from "../context/AuthContext";
 
 export const ProductListScreen = () => {
+  const { user } = useAuth();
+  const isAdmin = user?.tipo === "admin";
+
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [filtro, setFiltro] = useState("");
-  const navigation = useNavigation<NativeStackNavigationProp<AppStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AppStackParamList>>();
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -31,8 +36,12 @@ export const ProductListScreen = () => {
   }, [isFocused]);
 
   const carregarProdutos = async () => {
-    const lista = await listarProdutos();
-    setProdutos(lista);
+    try {
+      const lista = await listarProdutos();
+      setProdutos(lista);
+    } catch (error) {
+      console.error("Erro ao carregar produtos:", error);
+    }
   };
 
   const excluirProduto = (id: string) => {
@@ -59,7 +68,7 @@ export const ProductListScreen = () => {
         source={
           item.imagem
             ? { uri: item.imagem }
-            : require("../assets/placeholder-image.png") // Imagem fallback local
+            : require("../assets/placeholder-image.png")
         }
         style={produto_styles.image}
       />
@@ -67,20 +76,23 @@ export const ProductListScreen = () => {
         <Text style={produto_styles.nome}>{item.nome}</Text>
         <Text style={produto_styles.descricao}>{item.descricao}</Text>
         <Text style={produto_styles.preco}>R$ {item.preco}</Text>
-        <View style={produto_styles.actions}>
-          <TouchableOpacity
-            onPress={() => editarProduto(item)}
-            style={produto_styles.buttonEdit}
-          >
-            <Text style={produto_styles.buttonText}>Editar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => excluirProduto(item.id)}
-            style={produto_styles.buttonDelete}
-          >
-            <Text style={produto_styles.buttonText}>Excluir</Text>
-          </TouchableOpacity>
-        </View>
+
+        {isAdmin && (
+          <View style={produto_styles.actions}>
+            <TouchableOpacity
+              onPress={() => editarProduto(item)}
+              style={produto_styles.buttonEdit}
+            >
+              <Text style={produto_styles.buttonText}>Editar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => excluirProduto(item.id)}
+              style={produto_styles.buttonDelete}
+            >
+              <Text style={produto_styles.buttonText}>Excluir</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </View>
   );

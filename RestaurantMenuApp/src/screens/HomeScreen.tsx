@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  RefreshControl,
-} from "react-native";
+import { View, Text, ScrollView, RefreshControl } from "react-native";
 import { useAuth } from "../context/AuthContext";
 import home_styles from "../styles/homeStyles";
 import { MenuButton } from "components/MenuButton";
@@ -14,23 +9,25 @@ export const HomeScreen = () => {
   const { user, logout } = useAuth();
   const [carregando, setCarregando] = useState(false);
 
+  const isAdmin = user?.tipo === "admin";
+
   return (
     <View style={home_styles.page}>
       <ScrollView
         contentContainerStyle={{ flexGrow: 1, padding: 16 }}
         keyboardShouldPersistTaps="handled"
-        refreshControl={
-          <RefreshControl refreshing={carregando} />
-        }
+        refreshControl={<RefreshControl refreshing={carregando} />}
       >
         <Text style={home_styles.welcome}>Bem-vindo, {user?.nome}!</Text>
 
         <View style={home_styles.menuContainer}>
-          <MenuButton
-            title="Cadastrar Restaurante"
-            screen="RestaurantRegister"
-            icon={icons.restaurant}
-          />
+          {isAdmin && (
+            <MenuButton
+              title="Cadastrar Restaurante"
+              screen="RestaurantRegister"
+              icon={icons.restaurant}
+            />
+          )}
 
           <MenuButton
             title="Lista de Restaurantes"
@@ -38,11 +35,13 @@ export const HomeScreen = () => {
             icon={icons.restaurant}
           />
 
-          <MenuButton
-            title="Cadastrar Produto"
-            screen="ProductRegister"
-            icon={icons.product}
-          />
+          {isAdmin && (
+            <MenuButton
+              title="Cadastrar Produto"
+              screen="ProductRegister"
+              icon={icons.product}
+            />
+          )}
 
           <MenuButton
             title="Lista de Produtos"
