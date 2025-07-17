@@ -46,7 +46,8 @@ Este é um projeto desenvolvido como parte do **Trabalho Prático da     discipl
 
 📺 Assista ao vídeo de apresentação do app pelo link abaixo:
 
-🔗 [Link para o vídeo](https://youtube.com/seu-video-aqui)
+- [Link Google Drive](https://drive.google.com/file/d/1ytXn6UTqU0lJgk5jzvNK7DoYozCGR9eM/view?usp=sharing)
+- [Arquivo MP4](https://github.com/oluizeduardo/restaurant-menu/tree/main/video)
 
 ## 🔗 Repositório
 
