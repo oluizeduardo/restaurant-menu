@@ -1,1 +1,0 @@
-# 🍽️ App Mobile - Cardápio de Restaurante
